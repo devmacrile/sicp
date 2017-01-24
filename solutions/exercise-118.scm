@@ -1,0 +1,13 @@
+(define (even n)
+	(= (remainder n 2) 0))
+
+(define (mult a b)
+    (define (double x)
+    	(+ x x))
+    (define (halve x)
+    	(/ x 2))
+    (define (mult-iter a counter sum)
+    	(cond ((= counter 0) sum)
+    		  ((even? a) (mult-iter (double a) (halve counter) sum))
+    		  (else (mult-iter a (- counter 1) (+ sum a)))))
+    (mult-iter a b 0))

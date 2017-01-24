@@ -40,6 +40,8 @@
 (search-for-primes 10000 10100)
 (search-for-primes 100000 100100)
 (search-for-primes 1000000 1000100)
-  
-  
-  
+
+; book dates itself with the comparisons!
+; Uncomment the below for more discernible comparison
+(search-for-primes 10000000000 10000001000)
+(search-for-primes 100000000000 100000001000)

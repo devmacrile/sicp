@@ -1,6 +1,0 @@
-(define (timed-prime-test n)
-	(newline)
-	(display n)
-	(start-prime-test n (runtime)))
-
-(define)

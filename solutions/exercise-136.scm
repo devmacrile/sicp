@@ -18,4 +18,3 @@
 (fixed-point (lambda (y) (average y (/ (log 1000) (log y)))) 1.5)
 
 ; iterations reduced from 35 to 12 using average damping
-

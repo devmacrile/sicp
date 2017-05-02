@@ -83,9 +83,9 @@
                   code
                   (error "bad symbol -- ENCODE-SYMBOL" symbol)))
               ((lookup? symbol (left-branch tree))
-                (iter symbol (left-branch tree) (append (list 0) code)))
+                (iter symbol (left-branch tree) (append code (list 0))))
               ((lookup? symbol (right-branch tree))
-                (iter symbol (right-branch tree) (append (list 1) code)))
+                (iter symbol (right-branch tree) (append code (list 1))))
               (else (error "bad symbol -- ENCODE-SYMBOL" symbol))))
     (iter symbol tree `()))
 
@@ -110,8 +110,15 @@
 
 (define sample-message `(a d a b b c a))
 
-(encode-symbol `A sample-tree)
+; expected error
 (encode-symbol `E sample-tree)
-(encode-symbol `C sample-tree)
+
+(encode-symbol `a sample-tree)
+(encode-symbol `d sample-tree)
+(encode-symbol `a sample-tree)
+(encode-symbol `b sample-tree)
+(encode-symbol `b sample-tree)
+(encode-symbol `c sample-tree)
+(encode-symbol `a sample-tree)
 (encode sample-message sample-tree)
 

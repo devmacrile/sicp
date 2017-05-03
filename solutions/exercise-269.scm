@@ -90,26 +90,15 @@
     (iter symbol tree `()))
 
 
-(define (symbol-weight symbol tree)
-    (cond ((leaf? tree) 
-            (if (eq? symbol (symbol-leaf tree))
-                (list (weight-leaf tree))
-                (error "bad symbol -- ENCODE-SYMBOL" symbol)))
-          ((lookup? symbol (left-branch tree))
-            (encode-symbol symbol (left-branch tree)))
-          ((lookup? symbol (right-branch tree))
-            (encode-symbol symbol (right-branch tree)))
-          (else (error "bad symbol -- ENCODE-SYMBOL" symbol))))
+; ordered set => just take first two each call, merge and 
+; recursively call on this tree and the rest of the leaves.
+(define (successive-merge tree)
+    (if (null? tree)
+        (car tree)
+        (successive-merge 
+            (adjoin-set 
+                (make-code-tree (car tree) (cadr tree))
+                (cddr tree)))))
 
-(define sample-tree
-    (make-code-tree (make-leaf `A 4)
-                    (make-code-tree
-                        (make-leaf `B 2)
-                        (make-code-tree (make-leaf `D 1)
-                                        (make-leaf `C 1)))))
-
-(define sample-message `(a d a b b c a))
-
-(encode-symbol `A sample-tree)
-(encode-symbol `E sample-tree)  ; expected error
-(encode sample-message sample-tree)
+(define (generate-huffman-tree pairs)
+    (successive-merge (make-leaf-set pairs))

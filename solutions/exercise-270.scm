@@ -110,9 +110,18 @@
                      (list `WAH 1)))
 
 (define lyric-tree (generate-huffman-tree lyric-pairs))
+
 (encode `(Get a job) lyric-tree)
+; (1 1 1 1 1 1 1 0 0 1 1 1 1 0)
 (encode `(Sha na na na na na na na na) lyric-tree)
-(encode `(Wah yip yip yip yip yip yip yip yip) lyric-tree)
+; (1 1 1 0 0 0 0 0 0 0 0 0)
+(encode `(Wah yip yip yip yip yip yip yip yip yip) lyric-tree)
+; (1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)
 (encode `(Sha boom) lyric-tree)
-(define sample-lyrics `(Get a job Sha na na na na na na na na Get a job Sha na na na na na na na na Wah yip yip yip yip yip yip yip yip Sha boom))
-(encode sample-lyrics lyric-tree)
+; (1 1 1 0 1 1 0 1 1)
+
+; Total bits = 14 * 2 + 12 * 2 + 23 + 9 = 84
+;
+; If we used a fixed length encoding, we would need three bits
+; for each symbol (8 = 2^3), so the total number of bits 
+; required would = (3 * 3) * 2 + (9 * 3) * 2 + (10 * 3) + (9 * 3) = 129

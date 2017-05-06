@@ -48,7 +48,7 @@
 (define (adjoin-set x set)
     (cond ((null? set) (list x))
         ((< (weight x) (weight (car set))) (cons x set))
-        ((else (cons (car set) (adjoin-set x (cdr set)))))))
+        (else (cons (car set) (adjoin-set x (cdr set))))))
 
 ; Takes a list of symbol-frequency pairs (i.e. (A 4) (B 3) ...)
 ; and constructs an ordered set of leaves.

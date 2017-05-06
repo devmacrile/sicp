@@ -48,7 +48,7 @@
 (define (adjoin-set x set)
     (cond ((null? set) (list x))
         ((< (weight x) (weight (car set))) (cons x set))
-        ((else (cons (car set) (adjoin-set x (cdr set)))))))
+        (else (cons (car set) (adjoin-set x (cdr set))))))
 
 ; Takes a list of symbol-frequency pairs (i.e. (A 4) (B 3) ...)
 ; and constructs an ordered set of leaves.
@@ -93,7 +93,7 @@
 ; ordered set => just take first two each call, merge and 
 ; recursively call on this tree and the rest of the leaves.
 (define (successive-merge tree)
-    (if (null? tree)
+    (if (null? (cdr tree))
         (car tree)
         (successive-merge 
             (adjoin-set 
@@ -101,4 +101,4 @@
                 (cddr tree)))))
 
 (define (generate-huffman-tree pairs)
-    (successive-merge (make-leaf-set pairs))
+    (successive-merge (make-leaf-set pairs)))

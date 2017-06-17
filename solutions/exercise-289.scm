@@ -1,0 +1,18 @@
+(define (max-order term-list)
+    (- (length term-list) 1))
+
+(define (adjoin-term term term-list)
+    (let ((exponent (order term))
+          (term-ord (max-order term-list)))
+        (cond ((< exponent term-ord)
+                (cons (coeff (first-term term-list)) 
+                      (adjoin-term term (rest-terms term-list))))
+              ((> exponent term-ord)
+                (adjoin-term term (cons 0 term-list)))
+              ((= exponent term-ord)
+                (cons (+ (coeff term) (coeff (first-term term-list))) 
+                      (rest-terms term-list))))))
+
+(define (first-term terms)
+    (make-term (- (length terms) 1)
+               (car terms)))

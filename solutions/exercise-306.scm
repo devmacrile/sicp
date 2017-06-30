@@ -1,7 +1,7 @@
 (define rand
     (let ((x random-init))
         (define (reset n)
-            (set! x (rand-update n)))
+            (set! x n)))
         (define (generate)
             (set! x (rand-update x))
             x)

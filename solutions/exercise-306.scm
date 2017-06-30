@@ -1,0 +1,11 @@
+(define rand
+    (let ((x random-init))
+        (define (reset n)
+            (set! x (rand-update n)))
+        (define (generate)
+            (set! x (rand-update x))
+            x)
+        (define (dispatch m)
+            (cond ((eq? m `generate) generate)
+                  ((eq? m `reset) reset))
+                  (else (error "Unkown request -- RAND" m)))))

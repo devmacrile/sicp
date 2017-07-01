@@ -1,0 +1,36 @@
+(define (make-account balance password)
+    (let ((account-pw password))
+        (define (withdraw amount)
+            (if (>= balance amount)
+                (begin (set! balance (- balance amount))
+                       balance)
+                "Insufficient funds"))
+        (define (deposit amount)
+            (set! balance (+ balance amount)))
+        (define (check-password pw)
+            (eq? account-pw pw))
+        (define (dispatch pw m)
+            (if (eq? pw account-pw)
+                (cond ((eq? m `withdraw) withdraw)
+                      ((eq? m `deposit) deposit)
+                      ((eq? m `check-password) check-password)
+                      (else (error "Unknown request -- MAKE-ACCOUNT" m)))
+                "Incorrect password"))
+        dispatch))
+
+
+(define (make-joint account account-pw new-pw)
+    (let ((joint-pw new-pw))
+        (define (dispatch pw m)
+            (if (eq? pw new-pw)
+                (account account-pw m)
+                "Incorrect joint password"))
+        (if (account account-pw `check-password)
+            dispatch
+            "Incorrect account password")))
+
+(define acc (make-account 100 `secret-password))
+(define joint (make-joint acc `secret-password `joint-password))
+((joint `joint-password `withdraw) 40)
+
+

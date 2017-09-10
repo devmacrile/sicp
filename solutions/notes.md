@@ -62,3 +62,17 @@ Richard Waters developed a program that automatically analyzes traditional Fortr
 viewing them in terms of maps, filters, and accumulations.  He found that fully 90% of the
 code in the Fortran Scientific Subroutine Package fits neatly into this paradigm.
 -- Footnote on p. 118
+
+
+### Sameness and change (3.1.3)  
+
+A language that supports the concept that "equals can be substituted for equals" in
+an expression without changing the value of the expression is said to be
+_referentially transparent_.  Referential transparency is violated when we include
+set! in our language => makes it tricky to determine when we can simplify
+expressions via substitution and reasoning about programs that use assignment becomes
+more difficult.
+
+Programming that makes extensive use of assignment is called _imperative programming_.
+
+aliasing = single computational object being accessed by more than one name

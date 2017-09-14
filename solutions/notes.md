@@ -41,7 +41,7 @@ implementations of common languages (including Ada, Pascal, and C) are designed 
 that the interpretation of any recursive procedure consumes an amount of memory that grows
 with the number of procedure calls, even when the process described is, in principle iterative.  
 As a consequence, these languages can describe iterative processes only by resorting to 
-special-purpose 'looping constructs' such as do, repeat, until, for, and while.  The implementation
+special-purpose 'looping constructs' such as do, repeat, until, for, and while.  The implementation 
 of Scheme we shall consider in chapter 5 does not share this **defect**.  It will execute an
 iterative process in constant space, even if the iterative process is described by a
 recursive procedure."
@@ -76,3 +76,28 @@ more difficult.
 Programming that makes extensive use of assignment is called _imperative programming_.
 
 aliasing = single computational object being accessed by more than one name
+
+
+### Concurrency (3.4)  
+
+Mutex implementation (3.4.2) ironically could be susceptible
+to the exact problems it is trying to help solve.  The implementation of testing and
+setting the mutex must ensure that no concurrent reads occur between these after
+setting but before the testing return.  The actual implementation here actually
+depends on the details of how the underlying system runs concurrent processes.  It could
+use time-slicing with a sequential processor: cycling through the processes and
+running each a little bit, interrupting it, and repeating with the next process.  Or it
+could have instructions with atomic operations built into the underlying hardware. (**)
+
+If the scenario is time-slicing on a single processor, MIT Scheme (the implementation I
+have been using throughout the exercises) would implement test-and-set! as:
+
+    (define (test-and-set! cell)
+        (without-interrupts
+            (lambda ()
+                (if (car cell)
+                    true
+                    (begin (set-car! cell true)
+                           false)))))
+
+Key point being the use of (without-interrupts <...>).

@@ -101,3 +101,19 @@ have been using throughout the exercises) would implement test-and-set! as:
                            false)))))
 
 Key point being the use of (without-interrupts <...>).
+
+
+### Streams (3.5)  
+
+An alternative approach to modelling state, based on data structures called streams.
+
+Motivating questions:
+    - Can we avoid identifying time in the computer with time in the modeled world?  
+    - Must we make the model change with time in order to model phenomena in a changing world?
+
+If time is measured in discreted steps, then we can model a time function as a (possibly
+infinite) sequence.  Stream is a sequence with delayed evaluation.  They can allow us
+to model systems that have state without ever using assignment or mutable data (but of
+course have challenges of their own).
+
+

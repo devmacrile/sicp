@@ -111,7 +111,7 @@ Motivating questions:
     - Can we avoid identifying time in the computer with time in the modeled world?  
     - Must we make the model change with time in order to model phenomena in a changing world?
 
-If time is measured in discreted steps, then we can model a time function as a (possibly
+If time is measured in discrete steps, then we can model a time function as a (possibly
 infinite) sequence.  Stream is a sequence with delayed evaluation.  They can allow us
 to model systems that have state without ever using assignment or mutable data (but of
 course have challenges of their own).

@@ -51,10 +51,11 @@ recursive procedure."
 
 Discussion of means of combinations being "closures" (i.e. results of combination can in 
 turn be combined using the same operation).  
+
 "In Pascal the plethora of declarable data structures induces a specialization within functions
 that inhibits and penalizes casual cooperation.  It is better to have 100 functions that operate 
 on one data structure than to have 10 functions that operate on 10 data structures."
--- Alan Perlis quote (p. 99)
+-- Alan Perlis quote (p. 99)  
 
 'nil' is a contraction of the latin word nihil, which means "nothing".  Interesting tidbit.
 
@@ -107,13 +108,84 @@ Key point being the use of (without-interrupts <...>).
 
 An alternative approach to modelling state, based on data structures called streams.
 
-Motivating questions:
+Motivating questions:  
+
     - Can we avoid identifying time in the computer with time in the modeled world?  
-    - Must we make the model change with time in order to model phenomena in a changing world?
+    - Must we make the model change with time in order to model phenomena in a changing world?  
+
 
 If time is measured in discrete steps, then we can model a time function as a (possibly
 infinite) sequence.  Stream is a sequence with delayed evaluation.  They can allow us
 to model systems that have state without ever using assignment or mutable data (but of
 course have challenges of their own).
+
+Explicit use of `delay and `force gives us a ton of flexibility, but adds complexity
+to the usage (i.e. remembers to pass delayed arguments).  Basically, now have two classes
+of procedures: ordinary, and those that take delayed arguments.  And this forces us to create
+separate classes of higher-order procedures as well.  Great footnote (72):
+
+    > This small reflection, in Lisp, of the difficulties that conventional strongly typed
+    languages such as Pascal have in coping with higher-order procedures.  In such languages,
+    the programmer must specify the data types fo the arguments and the result of each proc-
+    edure: number, logical value, sequence, and so on.  Consequently, we could not express an
+    abstraction such as "map a given procedure proc over all the elements in a sequence" by
+    a single higher-order procedure such as stream-map.  Rather, we would need a different
+    mapping procedure for each different combination of argument and result data types that
+    might be specified for a proc...  
+
+One option would be to automatically delay all arguments and only force them when needed.  This
+change would make our language use normal-order evaluation (see above, 1.1.5).  An elegant way
+to simplify delayed evaluation, and would be a good choice if stream processing were the only
+concern; but, this destroys our ability to design programs that depend on the ordering of time,
+i.e. programs that use assignment, mutate data, or perform i.o.  tldr; mutability and delayed
+evaluation do not mix well in programming languages.
+
+Gist of chapter three: started out modelling systems with state by relating hte temporal behavior
+of objects in the world to the temporal behavior of corresponding computational objects.  Streams
+provide an alternative way to model objects with local state: we can model a changing quantity
+using a stream that represents the time history of successive states, essentially representing
+time _explicitly_ (time in real world decoupled from computational time).  
+
+
+### Metacircular evaluation (4.1)  
+
+"The evaluator, which determines the meaning of expressions in a programming language, is just 
+another program."  
+
+Evaluation:  
+
+  1.  (combinations) Evaluate subexpressions, apply value of operator subexpression to values of 
+      operand subexpression.  
+  2.  (compound procedure)  Evaluate body of procedure in new environment (extending environment 
+      part of procedure object by a frame in which parameters are bound to arguments to which procedure 
+      is applied).  
+
+Our evaluator for Lisp will be implemented as a Lisp program; an evaluator written in the same
+language that it evaluates is called *metacircular*.  
+
+    (define (eval exp env)
+        (cond ((self-evaluating? exp) exp)
+              ((variable? exp) (lookup-variable-value exp env))
+              ((quoted? exp) (text-of-quotation exp))
+              ((assignment? exp) (eval-assignment exp env))
+              ((definition? exp) (eval-definition exp env))
+              ((if? exp) (eval-if exp env))
+              ((lambda? exp)
+                (make-procedure (lambda-parameters exp)
+                                (lambda-body exp)
+                                env))
+              ((begin? exp)
+                (eval-sequence (begin-actions exp) env))
+              ((cond? exp) (eval (cond->if exp) env))
+              ((application? exp)
+                (apply (eval (operator exp) env)
+                       (list-of-values (operands exp) env)))
+              (else
+                (error "Unkown expression type -- EVAL" exp))))  
+
+In a real implementation, dispatch would be done in a data-directed style s.t. the definition of `eval`
+would not have to change if new expression types were added.  
+
+A language, as we know, is comprised of **primitives**, **means of abstraction**, and **means of combination**.  
 
 

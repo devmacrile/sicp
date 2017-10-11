@@ -188,4 +188,17 @@ would not have to change if new expression types were added.
 
 A language, as we know, is comprised of **primitives**, **means of abstraction**, and **means of combination**.  
 
+#### Data as Programs (4.1.5)  
 
+The evaluator can be thought of as a special machine that takes as input a description of a machine, and
+with this input configures itself to emulate the machine described.  So our evaluator is a *universal machine*.  
+
+    The deep idea here is that any evaluator can emulate any other.  Thus, the notion of "what can in principle
+    be computed" (ignoring practicalities of time and memory required) is independent of the language or the
+    computer, and instead reflects an underlying notion of computability. 
+
+    ...
+
+    Some people find it counterintuitive that an evaluator, which is implemented by a relatively simple procedure,
+    can emulate programs that are more complex than the evaluator itself.  The existence of a universal evaluator 
+    machine is a deep and wonderful property of computation.  

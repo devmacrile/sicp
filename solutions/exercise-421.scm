@@ -8,6 +8,16 @@
 10)
 ;Value: 3628800
 
+((lambda (n)
+    ((lambda (fib)
+        (fib fib n))
+     (lambda (fb k)
+        (if (< k 2)
+            1
+            (+ (fb fb (- k 1)) (fb fb (- k 2)))))))
+8)
+
+
 ; (b)
 (define (f x)
     (define (even? n)

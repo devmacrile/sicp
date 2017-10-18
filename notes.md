@@ -110,8 +110,8 @@ An alternative approach to modelling state, based on data structures called stre
 
 Motivating questions:  
 
-    - Can we avoid identifying time in the computer with time in the modeled world?  
-    - Must we make the model change with time in order to model phenomena in a changing world?  
+* Can we avoid identifying time in the computer with time in the modeled world?  
+* Must we make the model change with time in order to model phenomena in a changing world?  
 
 
 If time is measured in discrete steps, then we can model a time function as a (possibly

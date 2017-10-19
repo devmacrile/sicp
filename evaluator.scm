@@ -296,6 +296,8 @@
           (list `- -)
           (list `/ /)
           (list `> >)
+          (list `quasiquote "'")
+          (list `display display)
           (list `quit quit)
     ))
 

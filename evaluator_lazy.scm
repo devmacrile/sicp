@@ -107,6 +107,11 @@
           (else (eval (first-exp exps) env)
                 (eval-sequence (rest-exps exps) env))))
 
+;(define (eval-sequence exps env)
+;    (cond ((last-exp? exps) (eval (first-exp exps) env))
+;          (else (actual-value (first-exp exps) env)
+;                (eval-sequence (rest-exps exps) env))))
+
 (define (eval-assignment exp env)
     (set-variable-value! (assignment-variable exp)
                          (eval (assignment-value exp) env)
@@ -353,6 +358,8 @@
           (list `- -)
           (list `/ /)
           (list `> >)
+          (list `quasiquote "'")
+          (list `display display)
           (list `quit quit)
     ))
 

@@ -202,3 +202,14 @@ with this input configures itself to emulate the machine described.  So our eval
     Some people find it counterintuitive that an evaluator, which is implemented by a relatively simple procedure,
     can emulate programs that are more complex than the evaluator itself.  The existence of a universal evaluator 
     machine is a deep and wonderful property of computation.  
+
+#### Amb and Search (4.3.1)  
+
+Introduces the concept of *nondeterministic computing*, which erodes the distinction between declarative descriptions
+and imperative specifications of computational procedures (pre*amb*le to prolog).
+
+**amb** is shorthand for ambiguous => i.e. the expression  
+	(amb <e1> <e2> ... <en>)  
+returns the value of one of the n expressions *ambiguously*.  
+The idea of amb was introduced by John McCarthy (circa 1961).  
+

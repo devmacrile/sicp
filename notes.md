@@ -208,8 +208,12 @@ with this input configures itself to emulate the machine described.  So our eval
 Introduces the concept of *nondeterministic computing*, which erodes the distinction between declarative descriptions
 and imperative specifications of computational procedures (pre*amb*le to prolog).
 
-**amb** is shorthand for ambiguous => i.e. the expression  
+*amb* is shorthand for ambiguous => i.e. the expression  
+
 	(amb <e1> <e2> ... <en>)  
-returns the value of one of the n expressions *ambiguously*.  
-The idea of amb was introduced by John McCarthy (circa 1961).  
+
+returns the value of one of the n expressions *ambiguously*. The idea of amb was introduced by John McCarthy (circa 1961).  
+
+The advantage of this style of programming is that the details of how search is performed are maskes s.t. we can operate at 
+a higher level of abstraction. 
 

@@ -229,7 +229,7 @@ even (gasp) different return values (in the given implementation as streams of f
     weak enough to have a controllable procedural implementation.  
 
 One crucial difference here too is in the interpretation of *not*.  In logic programming, *not* moreso means that a given
-proposition is not deducible from the known; or, the not reflects the *closed worl assumption* that all relevant information
+proposition is not deducible from the known; or, the not reflects the *closed world assumption* that all relevant information
 is available.  See Clark (1978) for a longer discussion on this topic (paper is called Negation as Failure).  
 
 

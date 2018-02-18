@@ -56,6 +56,8 @@
 
 (define (negated-query exps) (car exps))
 
+(define (unique-query ops) (car ops))
+
 (define (predicate exps) (car exps))
 (define (args exps) (cdr exps))
 
@@ -165,6 +167,19 @@
         the-empty-stream))
     frame-stream))
 
+(define (uniquely-asserted query frame-stream)
+  (stream-flatmap
+    (lambda (frame)
+      (let ((evald (qeval (unique-query query)
+                          (singleton-stream frame))))
+        (cond ((stream-null? evald)
+               the-empty-stream)
+              ((stream-null? (stream-cdr evald))
+               evald)
+              (else
+                the-empty-stream))))
+    frame-stream))
+
 (define (lisp-value call frame-stream)
   (stream-flatmap
     (lambda (frame)
@@ -185,6 +200,7 @@
 (put `and `qeval conjoin)
 (put `or `qeval disjoin)
 (put `not `qeval negate)
+(put `unique `qeval uniquely-asserted)
 (put `lisp-value `qeval lisp-value)
 (put `always-true `qeval always-true)
 
@@ -436,3 +452,4 @@
               (query-driver-loop)))))
 
 (query-driver-loop)
+

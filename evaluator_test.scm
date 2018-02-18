@@ -73,3 +73,7 @@
 
 (job ?x (computer programmer))
 
+; 4.75
+; Unique query schemas added to interpreter.
+(and (job ?x ?j)
+     (unique (supervisor ?anyone ?x)))

@@ -217,3 +217,19 @@ returns the value of one of the n expressions *ambiguously*. The idea of amb was
 The advantage of this style of programming is that the details of how search is performed are maskes s.t. we can operate at 
 a higher level of abstraction. 
 
+#### Is Logic Programming Mathematical Logic?  
+
+tldr; no.  The query language provides a control structure that interprets logical statements procedurally, and this control 
+structure can be taken advantage of (i.e. logically equivalent forms having different performance characteristics or 
+even (gasp) different return values (in the given implementation as streams of frames)).  
+
+    The aim of logic programming is to provide the programmer with techniques for decomposing a computational problem into two
+    separate problems: "what" is to be computed, and "how" this should be computed.  This is accomplished by selecting a subset
+    of the statements of mathematical logic that is powerful enough to be able to describe anything one might want to compute, yet
+    weak enough to have a controllable procedural implementation.  
+
+One crucial difference here too is in the interpretation of *not*.  In logic programming, *not* moreso means that a given
+proposition is not deducible from the known; or, the not reflects the *closed worl assumption* that all relevant information
+is available.  See Clark (1978) for a longer discussion on this topic (paper is called Negation as Failure).  
+
+
